@@ -10,6 +10,14 @@ export default {
     })
   },
 
+  // 根据id删除spu
+  delSpuById(spuId) {
+    return request({
+      url: 'delSpuById?spuId=' + spuId,
+      method: 'post'
+    })
+  },
+
   // 保存Spu
   saveSpuInfo(spuForm) {
     return request({
