@@ -12,6 +12,7 @@
 
     <el-form-item label="图片上传" >
       <el-upload
+        ref="uploadFiles"
         :on-success="onUploadSuccess"
         :before-upload="beforeUpload"
         :on-preview="onUploadPreview"
@@ -165,7 +166,7 @@ export default {
         // 销售属性
         spuSaleAttrList: []
       }
-
+      this.spuSaleAttrListTemp = []
       this.getBaseSaleAttrList()
     },
 
@@ -206,6 +207,8 @@ export default {
       // console.log(this.spuForm)
 
       spu.saveSpuInfo(this.spuForm).then(response => {
+        // 清空上传图片
+        this.$refs.uploadFiles.clearFiles()
         // 调用父组件监听函数
         this.$emit('listenOnSave')
       })
@@ -213,6 +216,8 @@ export default {
 
     // 返回Spu列表页面
     backToSpuList() {
+      // 清空上传图片
+      this.$refs.uploadFiles.clearFiles()
       this.$emit('listenOnClose')
     },
 
@@ -274,12 +279,12 @@ export default {
     // 根据name删除销售属性
     deleteSaleAttr(saleAttr) {
       const tempList = []
-      this.spuForm.spuSaleAttrList.forEach(item => {
+      this.spuSaleAttrListTemp.forEach(item => {
         if (item.saleAttr !== saleAttr) {
           tempList.push(item)
         }
       })
-      this.spuForm.spuSaleAttrList = tempList
+      this.spuSaleAttrListTemp = tempList
     },
 
     // 添加销售属性值
